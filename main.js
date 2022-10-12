@@ -20,30 +20,117 @@ const rules1 = [
                 "questionId": "1.3",
                 "type": "question",
                 "value": "yes"
+            },
+            {
+                "allOf": [
+                    {
+                        "operator": "lessThan",
+                        "questionId": "1.7",
+                        "type": "question",
+                        "value": "70"
+                    },
+                    {
+                        "operator": "equals",
+                        "questionId": "1.8",
+                        "type": "question",
+                        "value": "yes"
+                    },
+                    {
+                        "operator": "equals",
+                        "questionId": "1.3",
+                        "type": "question",
+                        "value": "yes"
+                    }
+                ]
             }
         ],
-        "anyOf": [
-            {
-                "operator": "lessThan",
-                "questionId": "1.7",
-                "type": "question",
-                "value": "70"
-            },
-            {
-                "operator": "equals",
-                "questionId": "1.8",
-                "type": "question",
-                "value": "yes"
-            },
-            {
-                "operator": "equals",
-                "questionId": "1.3",
-                "type": "question",
-                "value": "yes"
-            }
-        ]
     }
 ];
+
+const aasdf = [
+    {
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "max": 130,
+              "min": 80,
+              "operator": "between",
+              "questionId": "1.7",
+              "type": "question"
+            },
+            {
+              "operator": "equals",
+              "questionId": "1.8",
+              "type": "question",
+              "value": "yes"
+            },
+            {
+              "anyOf": [
+                {
+                  "operator": "equals",
+                  "questionId": "1.1",
+                  "type": "question",
+                  "value": "no"
+                },
+                {
+                  "operator": "equals",
+                  "questionId": "1.2",
+                  "type": "question",
+                  "value": "no"
+                },
+                {
+                  "operator": "equals",
+                  "questionId": "1.3",
+                  "type": "question",
+                  "value": "no"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "max": 100,
+              "min": 70,
+              "operator": "between",
+              "questionId": "1.7",
+              "type": "question"
+            },
+            {
+              "operator": "equals",
+              "questionId": "1.8",
+              "type": "question",
+              "value": "no"
+            },
+            {
+              "anyOf": [
+                {
+                  "operator": "equals",
+                  "questionId": "1.1",
+                  "type": "question",
+                  "value": "no"
+                },
+                {
+                  "operator": "equals",
+                  "questionId": "1.2",
+                  "type": "question",
+                  "value": "no"
+                },
+                {
+                  "operator": "equals",
+                  "questionId": "1.3",
+                  "type": "question",
+                  "value": "no"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 
 const rules = [
     {
@@ -64,21 +151,23 @@ const rules = [
 function recursive(data, index, len) {
     if (data.hasOwnProperty('operator')) {
         let finalrule = '';
-        finalrule += '( '
+        // finalrule += '( '
         if (data.operator == 'between') {
             finalrule += a.ruleReturn(data.operator, data.value, 0, data.min, data.max)
         } else {
             finalrule += a.ruleReturn(data.operator, data.value, 0)
         }
-        finalrule += ' )'
+        // finalrule += ' )'
         return finalrule
     } else if (data.hasOwnProperty('allOf') && data.hasOwnProperty('anyOf')) {
-        
+
     } else if (data.hasOwnProperty('allOf')) {
         const allOf = [...data.allOf]
         let allOfrule = '';
         allOf.map((res, i) => {
+            allOfrule += '( '
             allOfrule += recursive(res,i, allOf.length);
+            allOfrule += ' )'
             if (allOf.length - 1 != i) {
                 allOfrule += ' ';
                 allOfrule += a.convertStringToOpertor('allOf')
@@ -90,7 +179,9 @@ function recursive(data, index, len) {
         const anyOf = [...data.anyOf]
         let anyOfrule = '';
         anyOf.map((res, i) => {
+            anyOfrule += '( '
             anyOfrule += recursive(res,i, anyOf.length);
+            anyOfrule += ' )'
             if (anyOf.length - 1 != i) {
                 anyOfrule += ' ';
                 anyOfrule += a.convertStringToOpertor('anyOf')
@@ -112,4 +203,4 @@ async function rec(rules01) {
     }
     console.log(vaue)
 }
-rec(rules1);
+rec(aasdf);
