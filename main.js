@@ -148,6 +148,104 @@ const rules = [
     }
 ];
 
+const checkingrule = [{
+  "anyOf": [
+      {
+          "allOf": [
+              {
+                  "max": 130,
+                  "min": 80,
+                  "operator": "between",
+                  "questionId": "1.7",
+                  "type": "question"
+              },
+              {
+                  "operator": "equals",
+                  "questionId": "1.8",
+                  "type": "question",
+                  "value": "yes"
+              },
+              {
+                  "anyOf": [
+                      {
+                          "operator": "equals",
+                          "questionId": "1.1",
+                          "type": "question",
+                          "value": "no"
+                      },
+                      {
+                          "operator": "equals",
+                          "questionId": "1.2",
+                          "type": "question",
+                          "value": "no"
+                      },
+                      {
+                          "operator": "equals",
+                          "questionId": "1.3",
+                          "type": "question",
+                          "value": "no"
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "allOf": [
+              {
+                  "max": 100,
+                  "min": 70,
+                  "operator": "between",
+                  "questionId": "1.7",
+                  "type": "question"
+              },
+              {
+                  "operator": "equals",
+                  "questionId": "1.8",
+                  "type": "question",
+                  "value": "no"
+              },
+              {
+                  "anyOf": [
+                      {
+                          "operator": "equals",
+                          "questionId": "1.1",
+                          "type": "question",
+                          "value": "no"
+                      },
+                      {
+                        'allOf' : [
+                          {
+                            "operator": "equals",
+                            "questionId": "1.2",
+                            "type": "question",
+                            "value": "yes"
+                        },
+                        {
+                            "operator": "equals",
+                            "questionId": "1.3",
+                            "type": "question",
+                            "value": "yes"
+                        }
+                        ]
+                      },
+                      {
+                          "operator": "equals",
+                          "questionId": "1.2",
+                          "type": "question",
+                          "value": "no"
+                      },
+                      {
+                          "operator": "equals",
+                          "questionId": "1.3",
+                          "type": "question",
+                          "value": "no"
+                      }
+                  ]
+              }
+          ]
+      }
+  ]
+}]
 function recursive(data, index, len) {
     if (data.hasOwnProperty('operator')) {
         let finalrule = '';
@@ -203,4 +301,4 @@ async function rec(rules01) {
     }
     console.log(vaue)
 }
-rec(aasdf);
+rec(checkingrule);
