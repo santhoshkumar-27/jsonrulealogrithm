@@ -299,6 +299,7 @@ async function rec(rules01) {
             vaue += ' '
         }
     }
-    console.log(vaue)
+    console.log(vaue);
+    console.log(eval(vaue));
 }
 rec(checkingrule);
